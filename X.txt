@@ -1,0 +1,5 @@
+On the discussion of custom mods, there is another one we haven't finished discussing but next season we wanted to tweak some minor mechanics to give us the ability for shenanigans.
+
+Would it be possibly to get a mod that:
+1 Treats players like mobs when in comes to boats and minecarts, meaning they can be pushed into them.
+2 Treats players like mobs when in comes to leashes, meaning a player can be leashed and pulled around etc.
