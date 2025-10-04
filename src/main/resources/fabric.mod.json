@@ -22,13 +22,9 @@
 	"mixins": [
         "more_leashing.mixins.json"
 	],
+    "accessWidener": "more_leashing.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.17.2",
-		"minecraft": "~1.21.8",
-		"java": ">=21",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
+		"minecraft": ">=1.21.10-rc.1 <=1.21.10"
 	}
 }
