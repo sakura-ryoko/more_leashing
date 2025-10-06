@@ -1,5 +1,6 @@
 package com.sakuraryoko;
 
+import com.sakuraryoko.config.ConfigManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,11 @@ public class MoreLeashing implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		// NO-OP
+        if (!ConfigManager.INSTANCE.loadConfig())
+        {
+            debugLog(Reference.MOD_ID+": Saving new config file.");
+            ConfigManager.INSTANCE.saveConfig();
+        }
 	}
 
 	public static void debugLog(String str, Object... args)

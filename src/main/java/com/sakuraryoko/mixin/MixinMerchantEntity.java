@@ -2,6 +2,7 @@ package com.sakuraryoko.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 
+import com.sakuraryoko.config.ConfigSettings;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -20,6 +21,6 @@ public abstract class MixinMerchantEntity extends PassiveEntity
 	@ModifyReturnValue(method = "canBeLeashed", at = @At("RETURN"))
 	private boolean more_leashing$canBeLeashed(boolean original)
 	{
-		return true;
+		return ConfigSettings.INSTANCE.isLeadMerchants();
 	}
 }

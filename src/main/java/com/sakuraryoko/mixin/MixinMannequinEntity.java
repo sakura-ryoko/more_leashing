@@ -1,5 +1,6 @@
 package com.sakuraryoko.mixin;
 
+import com.sakuraryoko.config.ConfigSettings;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.command.argument.EntityAnchorArgumentType;
@@ -78,4 +79,9 @@ public abstract class MixinMannequinEntity extends PlayerLikeEntity implements L
 		}
 	}
 
+    @Override
+    public boolean canBeLeashed()
+    {
+        return ConfigSettings.INSTANCE.isLeadMannequins();
+    }
 }

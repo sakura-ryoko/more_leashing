@@ -1,5 +1,6 @@
 package com.sakuraryoko.mixin;
 
+import com.sakuraryoko.config.ConfigSettings;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.entity.*;
@@ -19,10 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinPlayerEntity extends PlayerLikeEntity implements Leashable
 {
 	@Shadow public abstract void tickMovement();
-
-	@Shadow
-	public abstract void travel(Vec3d movementInput);
-
+	@Shadow public abstract void travel(Vec3d movementInput);
 	@Unique private LeashData leashData;
 
 	protected MixinPlayerEntity(EntityType<? extends LivingEntity> entityType, World world)
@@ -94,4 +92,10 @@ public abstract class MixinPlayerEntity extends PlayerLikeEntity implements Leas
 //			ticks--;
 //		}
 //	}
+
+    @Override
+    public boolean canBeLeashed()
+    {
+        return ConfigSettings.INSTANCE.isLeadPlayers();
+    }
 }

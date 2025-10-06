@@ -2,6 +2,7 @@ package com.sakuraryoko.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 
+import com.sakuraryoko.config.ConfigSettings;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -21,6 +22,6 @@ public abstract class MixinMobEntity extends LivingEntity
 	                   at = @At("RETURN"))
 	private boolean more_leashing$allowMobLeashing(boolean original)
 	{
-		return true;
-	}
+        return ConfigSettings.INSTANCE.isLeadMobs();
+    }
 }
