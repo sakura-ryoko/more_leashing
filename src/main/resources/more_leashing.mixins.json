@@ -3,11 +3,18 @@
     "package": "com.sakuraryoko.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
-        "MixinMannequinEntity",
-        "MixinMerchantEntity",
-        "MixinMobEntity",
+        "MixinAbstractBoatEntity",
+        "MixinDefaultMinecraftController",
+        "MixinEntity",
+        "MixinExperimentalMinecraftController",
+        "MixinLeashable",
+        "MixinLivingEntity",
         "MixinPlayerEntity",
-        "MixinSharedConstants"
+        "MixinServerPlayerEntity",
+        "MixinServerPlayNetworkHandler",
+        "MixinSharedConstants",
+        "MixinVehicleEntity",
+        "MixinVexEntity"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -12,54 +12,54 @@ public class ConfigSettings
 {
     public static final ConfigSettings INSTANCE = new ConfigSettings();
 
-    private final String LEAD_MANNEQUINS    = "leadMannequins";
-    private final String LEAD_MERCHANTS     = "leadMerchants";
-    private final String LEAD_MOBS          = "leadMobs";
-    private final String LEAD_PLAYERS       = "leadPlayers";
+    private final String CAPTURE_PLAYERS_IN_BOATS       = "capturePlayersInBoats";
+    private final String CAPTURE_PLAYERS_IN_MINECARTS   = "capturePlayersInMinecarts";
+	private final String CAPTURE_PLAYERS_AFK_TIMEOUT    = "capturePlayersAfkTimeout";
+    private final String LEAD_PLAYERS                   = "leadPlayers";
 
-    private boolean leadMannequins = true;
-    private boolean leadMerchants = true;
-    private boolean leadMobs = true;
+    private boolean capturePlayersInBoats = true;
+    private boolean capturePlayersInMinecarts = true;
     private boolean leadPlayers = true;
+	private int capturePlayersAfkTimeout = 15;
 
     private ConfigSettings()
     {
     }
 
-    public boolean isLeadMannequins()
+	public boolean isCapturePlayersInMinecarts()
+	{
+		return this.capturePlayersInMinecarts;
+	}
+
+	public boolean isCapturePlayersInBoats()
     {
-        return this.leadMannequins;
+        return this.capturePlayersInBoats;
     }
 
-    public boolean isLeadMerchants()
-    {
-        return this.leadMerchants;
-    }
-
-    public boolean isLeadMobs()
-    {
-        return this.leadMobs;
-    }
+	public int getCapturePlayersAfkTimeout()
+	{
+		return this.capturePlayersAfkTimeout;
+	}
 
     public boolean isLeadPlayers()
     {
         return this.leadPlayers;
     }
 
-    public void setLeadMannequins(boolean leadMannequins)
+	public void setCapturePlayersInMinecarts(boolean toggle)
+	{
+		this.capturePlayersInMinecarts = toggle;
+	}
+
+	public void setCapturePlayersInBoats(boolean toggle)
     {
-        this.leadMannequins = leadMannequins;
+        this.capturePlayersInBoats = toggle;
     }
 
-    public void setLeadMerchants(boolean leadMerchants)
-    {
-        this.leadMerchants = leadMerchants;
-    }
-
-    public void setLeadMobs(boolean leadMobs)
-    {
-        this.leadMobs = leadMobs;
-    }
+	public void setCapturePlayersAfkTimeout(int timeout)
+	{
+		this.capturePlayersAfkTimeout = timeout;
+	}
 
     public void setLeadPlayers(boolean leadPlayers)
     {
@@ -74,18 +74,18 @@ public class ConfigSettings
             {
                 JsonObject obj = ele.getAsJsonObject();
 
-                if (JsonUtils.hasBoolean(obj, LEAD_MANNEQUINS))
+                if (JsonUtils.hasBoolean(obj, CAPTURE_PLAYERS_IN_MINECARTS))
                 {
-                    this.setLeadMannequins(JsonUtils.getBoolean(obj, LEAD_MANNEQUINS));
+                    this.setCapturePlayersInMinecarts(JsonUtils.getBoolean(obj, CAPTURE_PLAYERS_IN_MINECARTS));
                 }
-                if (JsonUtils.hasBoolean(obj, LEAD_MERCHANTS))
-                {
-                    this.setLeadMerchants(JsonUtils.getBoolean(obj, LEAD_MERCHANTS));
-                }
-                if (JsonUtils.hasBoolean(obj, LEAD_MOBS))
-                {
-                    this.setLeadMobs(JsonUtils.getBoolean(obj, LEAD_MOBS));
-                }
+	            if (JsonUtils.hasBoolean(obj, CAPTURE_PLAYERS_IN_BOATS))
+	            {
+		            this.setCapturePlayersInBoats(JsonUtils.getBoolean(obj, CAPTURE_PLAYERS_IN_BOATS));
+	            }
+	            if (JsonUtils.hasInteger(obj, CAPTURE_PLAYERS_AFK_TIMEOUT))
+	            {
+		            this.setCapturePlayersAfkTimeout(JsonUtils.getInteger(obj, CAPTURE_PLAYERS_AFK_TIMEOUT));
+	            }
                 if (JsonUtils.hasBoolean(obj, LEAD_PLAYERS))
                 {
                     this.setLeadPlayers(JsonUtils.getBoolean(obj, LEAD_PLAYERS));
@@ -104,9 +104,9 @@ public class ConfigSettings
         {
             JsonObject obj = new JsonObject();
 
-            obj.add(LEAD_MANNEQUINS, new JsonPrimitive(this.isLeadMannequins()));
-            obj.add(LEAD_MERCHANTS, new JsonPrimitive(this.isLeadMerchants()));
-            obj.add(LEAD_MOBS, new JsonPrimitive(this.isLeadMobs()));
+	        obj.add(CAPTURE_PLAYERS_IN_MINECARTS, new JsonPrimitive(this.isCapturePlayersInMinecarts()));
+            obj.add(CAPTURE_PLAYERS_IN_BOATS, new JsonPrimitive(this.isCapturePlayersInBoats()));
+	        obj.add(CAPTURE_PLAYERS_AFK_TIMEOUT, new JsonPrimitive(this.getCapturePlayersAfkTimeout()));
             obj.add(LEAD_PLAYERS, new JsonPrimitive(this.isLeadPlayers()));
 
             return Optional.of(obj);
