@@ -1,1 +1,5 @@
 accessWidener v1 named
+accessible class net/minecraft/entity/mob/VexEntity$ChargeTargetGoal
+accessible class net/minecraft/entity/mob/VexEntity$LookAtTargetGoal
+accessible class net/minecraft/entity/mob/VexEntity$TrackOwnerTargetGoal
+accessible class net/minecraft/entity/mob/VexEntity$VexMoveControl

@@ -1,20 +1,19 @@
 package com.sakuraryoko.mixin;
 
-import java.util.Collections;
+import java.util.Set;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPosition;
-import net.minecraft.entity.MovementType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
+import net.minecraft.network.packet.s2c.play.EntityPositionS2CPacket;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -80,26 +79,29 @@ public abstract class MixinServerPlayNetworkHandler
 					this.player.setAngles(yaw, pitch);
 				}
 
-				if (packet.changesPosition())
-				{
-					if (this.player.hasVehicle() &&
-							(ConfigSettings.INSTANCE.isCapturePlayersInBoats()) ||
-							ConfigSettings.INSTANCE.isCapturePlayersInMinecarts())
-					{
-						Entity veh = this.player.getRootVehicle();
-
-						veh.updatePassengerPosition(this.player);
-					}
-
-					this.player.move(MovementType.PISTON, Vec3d.ZERO);
-					this.player.networkHandler.sendPacket(
-							new PlayerPositionLookS2CPacket(0,
-							                                EntityPosition.fromEntity(this.player),
-							                                Collections.emptySet())
-					);
-
-					ci.cancel();
-				}
+				// FIXME
+//				if (packet.changesPosition())
+//				{
+//					if (this.player.hasVehicle() &&
+//							(ConfigSettings.INSTANCE.isCapturePlayersInBoats()) ||
+//							ConfigSettings.INSTANCE.isCapturePlayersInMinecarts())
+//					{
+//						Entity veh = this.player.getRootVehicle();
+//
+//						veh.updatePassengerPosition(this.player);
+//					}
+//
+//					this.player.networkHandler.sendPacket(
+//							new EntityPositionS2CPacket(0,
+//							                            EntityPosition.fromEntity(this.player),
+//							                            Set.of(PositionFlag.DELTA_X, PositionFlag.DELTA_Y, PositionFlag.DELTA_Z,
+//							                                   PositionFlag.X, PositionFlag.Y, PositionFlag.Z,
+//							                                   PositionFlag.X_ROT, PositionFlag.Y_ROT),
+//							                            this.player.isOnGround())
+//					);
+//
+//					ci.cancel();
+//				}
 			}
 			else
 			{

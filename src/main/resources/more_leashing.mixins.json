@@ -14,7 +14,11 @@
         "MixinServerPlayNetworkHandler",
         "MixinSharedConstants",
         "MixinVehicleEntity",
-        "MixinVexEntity"
+        "MixinVexEntity",
+        "MixinVexEntity$MixinVexEntity_ChargeTargetGoal",
+        "MixinVexEntity$MixinVexEntity_LookAtTargetGoal",
+        "MixinVexEntity$MixinVexEntity_TrackOwnerTargetGoal",
+        "MixinVexEntity$MixinVexEntity_VexMoveControl"
     ],
     "injectors": {
         "defaultRequire": 1

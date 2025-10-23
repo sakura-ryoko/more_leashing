@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.VexEntity;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
@@ -20,15 +21,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.sakuraryoko.config.ConfigSettings;
 import com.sakuraryoko.events.PlayerEvents;
 import com.sakuraryoko.utils.IPlayerInvoker;
+import com.sakuraryoko.utils.IVexInvoker;
 
 @Mixin(Entity.class)
 public abstract class MixinEntity
 {
-	@Shadow public abstract EntityType<?> getType();
 	@Shadow private ImmutableList<Entity> passengerList;
+	@Shadow public abstract EntityType<?> getType();
+	@Shadow protected abstract void removePassenger(Entity passenger);
 
 	@Inject(method = "addPassenger",
-	          at = @At(value = "RETURN"))
+	        at = @At(value = "RETURN"))
 	private void more_leashing$addPassenger2(Entity passenger, CallbackInfo ci)
 	{
 		if (ConfigSettings.INSTANCE.isCapturePlayersInBoats() &&
@@ -38,6 +41,7 @@ public abstract class MixinEntity
 			List<Entity> newList = new ArrayList<>(this.passengerList);
 			Entity firstEnt = newList.getFirst();
 
+			// This code reverses the order of the passengers
 			if (firstEnt instanceof ServerPlayerEntity fpe &&
 				((IPlayerInvoker) fpe).more_leashing$isCaptured() &&
 					passenger instanceof ServerPlayerEntity npe &&
@@ -71,6 +75,11 @@ public abstract class MixinEntity
 				PlayerEvents.onPlayerSetFree(pe, (Entity) (Object) this);
 			}
 		}
+		else if (passenger instanceof VexEntity ve &&
+				((IVexInvoker) ve).more_leashing$isTrackingBoat())
+		{
+			((IVexInvoker) ve).more_leashing$kill();
+		}
 	}
 
 	@Inject(method = "removePassenger", at = @At("HEAD"))
@@ -83,6 +92,11 @@ public abstract class MixinEntity
 				PlayerEvents.onPlayerSetFree(pe, (Entity) (Object) this);
 			}
 		}
+		else if (passenger instanceof VexEntity ve &&
+				((IVexInvoker) ve).more_leashing$isTrackingBoat())
+		{
+			((IVexInvoker) ve).more_leashing$kill();
+		}
 	}
 
 	@Inject(method = "stopRiding", at = @At("HEAD"))
@@ -94,6 +108,11 @@ public abstract class MixinEntity
 				((IPlayerInvoker) pe).more_leashing$isCaptured())
 		{
 			PlayerEvents.onPlayerSetFree(pe, null);
+		}
+		else if (thisEntity instanceof VexEntity ve &&
+				((IVexInvoker) ve).more_leashing$isTrackingBoat())
+		{
+			((IVexInvoker) ve).more_leashing$kill();
 		}
 	}
 }

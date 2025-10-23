@@ -44,6 +44,16 @@ public abstract class MixinAbstractBoatEntity extends VehicleEntity
 			!pe.hasVehicle() &&
 				((IPlayerInvoker) pe).more_leashing$canBeCaptured())
 		{
+//			if (this.getPassengerList().isEmpty())
+//			{
+//				IVexInvoker vex = (IVexInvoker) new VexEntity(EntityType.VEX, pe.getEntityWorld());
+//				vex.more_leashing$toggleTame(true);
+//				vex.more_leashing$toggleBoatCaptureUnit(true);
+//				vex.more_leashing$setTarget(pe);
+//				pe.getEntityWorld().spawnEntity((Entity) vex);
+//				((Entity) vex).startRiding(this);
+//			}
+
 			if (pe.startRiding(this))
 			{
 				PlayerEvents.onPlayerCapturedByVehicle(pe, this);
